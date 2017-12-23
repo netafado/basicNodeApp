@@ -1,0 +1,15 @@
+{
+  "name": "basicnodeapp",
+  "version": "1.0.0",
+  "description": "Template para um quick starter de um projeto em node",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Isaias Francsico dos Santos",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^4.13.7"
+  }
+}

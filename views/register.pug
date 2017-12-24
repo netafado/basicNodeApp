@@ -1,0 +1,45 @@
+extends ./_layout/materialize.pug
+
+block content
+    .container
+        .row.section
+            .col.m8.offset-m2.card
+                .row    
+                    form.col.s12(action="/user/registrar", method="POST")
+                        .row
+                            .col.s12
+                                h3.titulo.center basicNodeApp
+                        .row
+                            input-field.col.s12
+                                input(placeholder="Usuário", id="nome", type="text", class="validate", name="nome", required)
+                        .row
+                            input-field.col.s12
+                                input(placeholder="email", id="email", type="email", class="validate", name="email", required)
+                        .row
+                            input-field.col.s6
+                                input(placeholder="CEP", id="cep", type="number", class="validate", name="cep", data-mask="CEP")
+                            input-field.col.s6
+                                input(placeholder="Rua", id="rua", type="text", class="validate", name="rua")
+                        .row
+                            input-field.col.s6
+                                input(placeholder="Bairro", id="bairro", type="text", class="validate", name="bairro")
+                            input-field.col.s6
+                                input(placeholder="cidade", id="cidade", type="text", class="validate", name="cidade")
+                        .row
+                            input-field.col.s6
+                                input(placeholder="estado", id="estado", type="text", class="validate", name="estado")
+                            input-field.col.s6
+                                input(placeholder="idade", id="idade", type="number", class="validate", name="idade")
+                        .row
+                            input-field.col.s6
+                                input(placeholder="password", id="password", type="password", class="validate", name="password", required)
+                            input-field.col.s6
+                                input(placeholder="password", id="password2", type="password", class="validate", name="password2", required)
+                                
+                        .row
+                            input-field.col.s12
+                                button(placeholder="Usuário", type="submit" name="action", class='btn waves-effect waves-light')
+                                    i(class="material-icons right") Send
+
+block append footerJS
+    script(src="/js/lib/forms.js")

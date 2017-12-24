@@ -1,3 +1,7 @@
+block vars
+// Se nenhum titulo for passado pelo render pegará o nome do app
+-var  title = titulo || _APP_INFO.appName
+
 html(lang="pt")
     head
         meta(charset="UTF-8")
@@ -6,12 +10,16 @@ html(lang="pt")
         title #{title}
         block headCSS
         //-CSS
-        link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
-        link(rel="stylesheet", href="css/materialize.css")
-        link(rel="stylesheet", href="css/style.css")
+        link(rel="stylesheet", href=`https://fonts.googleapis.com/icon?family=Material+Icons?v=${_APP_INFO.version}`)
+        link(rel="stylesheet", href=`/css/materialize.css?v=${_APP_INFO.version}` )
+        link(rel="stylesheet", href=`/css/style.css?v=${_APP_INFO.version}`)
 
-    body
-        include ../partials/nav.pug
+    body.blue-grey.lighten-5
+           
+        block navBar
+            include ../partials/nav.pug
+        // mensagens para o user
+        include ../partials/msg.pug
         block content
 
     footer
@@ -27,6 +35,6 @@ html(lang="pt")
             .footer-copyright
                 .container Isaias Francisco dos Santos
         block footerJS
-            script(src="https://code.jquery.com/jquery-2.1.1.min.js")
-            script(src="js/materialize.js")
-            script(src="js/init.js")
+            script(src=`https://code.jquery.com/jquery-2.1.1.min.js?v=${_APP_INFO.version}`)
+            script(src=`/js/materialize.js?v=${_APP_INFO.version}`)
+            script(src=`/js/init.js?v=${_APP_INFO.version}`)

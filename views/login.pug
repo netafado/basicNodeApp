@@ -1,0 +1,22 @@
+extends ./_layout/materialize.pug
+
+block content
+    .container
+        .row.section
+            .col.m4.offset-m4.card
+                .row    
+                    form.col.s12(action="/user/logar", method="POST")
+                        .row
+                            .col.s12
+                                h3.titulo.center basicNodeApp
+                        .row
+                            input-field.col.s12
+                                input(placeholder="Usuário", id="nome", type="text", class="validate", name="nome")
+                        .row
+                            input-field.col.s12
+                                input(placeholder="Usuário", id="password", type="password", class="validate", name="password")
+                        .row
+                            input-field.col.s12
+                                button(placeholder="Usuário", type="submit" name="action", class='btn waves-effect waves-light')
+                                    i(class="material-icons right") Send
+

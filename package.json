@@ -6,11 +6,18 @@
   "scripts": {
     "start": "nodemon app"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/netafado/basicNodeApp"
+  },
   "author": "Isaias Francsico dos Santos",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mongoose": "^4.13.7",
+    "nodemailer": "^4.4.1",
+    "passport": "^0.4.0",
     "pug": "^2.0.0-rc.4"
   }
 }

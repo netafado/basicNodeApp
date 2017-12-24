@@ -2,11 +2,13 @@ nav.deep-purple.darken-4(role="navigation")
     nav-wrapper.container
         a(href="#", id="logo-container", class="brand-logo")
         ul.right.hide-on-med-and-down
-            li
-                a(href="#") Navbar Link
+            each link in _APP_INFO.links
+                li                
+                    a(href=link.link) #{link.name}
         
         ul#nav-mobile.side-nav
             li
-                a(href="#")
+                each link in _APP_INFO.links
+                    a(href=link.link) #{link.name}
         a(href="#",data-activates="nav-mobile", class="button-collapse")
             i.material-icons Menu

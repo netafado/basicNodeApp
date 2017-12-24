@@ -1,0 +1,32 @@
+html(lang="pt")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title #{title}
+        block headCSS
+        //-CSS
+        link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+        link(rel="stylesheet", href="css/materialize.css")
+        link(rel="stylesheet", href="css/style.css")
+
+    body
+        include ../partials/nav.pug
+        block content
+
+    footer
+        .page-footer.deep-purple.darken-4
+            .container
+                .row
+                    .col.l6.s12
+                        h5.white-text basicNodeApp
+                    .col.l3.s12
+                       h5.white-text basicNodeApp
+                    .col.l3.s12
+                        h5.white-text basicNodeApp
+            .footer-copyright
+                .container Isaias Francisco dos Santos
+        block footerJS
+            script(src="https://code.jquery.com/jquery-2.1.1.min.js")
+            script(src="js/materialize.js")
+            script(src="js/init.js")

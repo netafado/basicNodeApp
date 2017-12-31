@@ -6,6 +6,40 @@
 const express   = require('express');
 const userModel = require('../models/model.user');
 var nodemailer  = require('nodemailer');
+const bcrypt    = require('bcryptjs');
+
+
+
+function sendEmail(email, id, msg){
+                
+    // envia um email para confirmar o email
+    var transporter = nodemailer.createTransport({
+        host: 'smtp.elasticemail.com',
+        port: '2525',
+        secure: false,
+        auth: {
+            user: 'isaias.fran@gmail.com',
+            pass: '559513a4-76f4-4f02-bc04-ceb3354f924a'
+            }
+        });
+                
+    var mailOptions = {
+        from: 'contato@isaiasfrancisco.com.br',
+            to: email,
+            subject: 'Confirme seu cadastro',
+            text: 'clique no link para confirmar seu email:<br>' + 'http://localhost:4000/user/registrar/'  + id
+    };
+                
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        }
+        else 
+        {
+            console.log('Email sent: ' + info.response + 'testando email: ' + email );
+        }
+    });
+}
 
 // insere um novo user no banco
 exports.registrarPost = (req, res)=>{
@@ -35,7 +69,7 @@ exports.registrarPost = (req, res)=>{
     }
     else
     {
-        const newUser = {
+        let newUser = {
             nome: req.body.nome,
             email: req.body.email,
             password: req.body.password,
@@ -43,52 +77,110 @@ exports.registrarPost = (req, res)=>{
             rua:req.body.rua,
             idade: req.body.idade,
             estado:req.body.estado
-        }
+    }
+    user = new userModel(newUser);
 
-        user = new userModel(newUser);
+        bcrypt.genSalt(10, (err, salt)=>{
+            bcrypt.hash(user.password, salt, (err, hash) =>{
+                if(err) throw err;
+                user.password = hash;
+                user.save()
+                    .then(user => {
+                        sendEmail(user.email, user._id, null);
+                         res.redirect('/user/logar');
+                    })
+                    .catch(err =>{
+                        if(err.code == 11000) {
+                             res.render('register', { 
+                                 errors:[ 'email já cadastrado']                
+                            });
+                            } else{
+                                res.render('register', { 
+                                    errors:[ 'Something bad', err]                
+                            });
+                        }  
+                    });
+            });
 
-        user.save()
-            .then((user)=>{
-                // envia um email para confirmar o email
-                var transporter = nodemailer.createTransport({
-                    host: 'smtp.elasticemail.com',
-                    port: '2525',
-                    secure: false,
-                    auth: {
-                        user: 'isaias.fran@gmail.com',
-                        pass: '559513a4-76f4-4f02-bc04-ceb3354f924a'
-                    }
-                });
-                
-                var mailOptions = {
-                    from: 'contato@isaiasfrancisco.com.br',
-                    to: user.email,
-                    subject: 'Confirme seu cadastro',
-                    text: 'clique no link para confirmar seu email:<br>' + 'http://localhost:4000/user/registrar/'  + user._id
-                };
-                
-                transporter.sendMail(mailOptions, function(error, info){
-                    if (error) {
-                    console.log(error);
-                    } else {
-                    console.log('Email sent: ' + info.response + 'testando email: ' + user.email );
-                    }
-                });
-                res.redirect('/user/logar');
-            })
-    }   
+        });
+
+   }   
 }
 
 exports.ConfirmaEmal = (req, res) =>{
     userModel.findOneAndUpdate({_id: req.params.id}, {emailConfirmado : true})
     .then((user)=>{
         if(user){
-            console.log(user);
             res.redirect('/');
         }
         else{
-            console.log(req.params.id);
             res.redirect('/');
         }
     })   
+}
+
+exports.logar = (req, res) => {
+    if(req.body.email && req.body.password)
+    {
+        // encontrando o user
+        userModel.findOne({email:req.body.email})
+                .then((user)=>{
+                    // ver a credencial
+                    if(user){
+                        // verefica se o user confimou o email
+                        if(user.ConfirmaEmal === false)
+                        {
+                            return res.render('login',{ errors: ['Email precisa ser confirmado']})
+                        }
+                        bcrypt.compare(req.body.password, user.password, (err, result)=>{
+                            if(result)
+                            {
+                                // logar user no sistema
+                                req.session._id = user._id;
+                                res.redirect('/user/profile')
+                            }
+                            else
+                            {
+                                res.render('login',{
+                                    errors: ['Senha errada']
+                                })
+                            }
+                        });
+                    }
+                    else{
+                        res.render('login',{
+                            errors: ['Usuário não encontrado']
+                        })                        
+                    }
+
+                })
+                .catch((err)=>{
+                    res.render('login',{
+                        errors: ['Alguma coisa aconteceu... tente mais tarde']
+                    })
+                })
+
+    }else{
+        res.render('login', {
+            namefv: 'erro',
+            errors: ['preencha os campos']
+        });
+    }
+
+}
+
+exports.logOut = (req, res) =>{
+    req.session.destroy(function(err) {
+        if(err) {
+          console.log(err);
+        } else {
+          res.redirect('/');
+        }
+      });
+}
+
+exports.profile = (req, res) =>{
+    res.render('profile', {
+        name: "Profile"
+    })
 }

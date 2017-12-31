@@ -1,17 +1,36 @@
 const express       = require('express');
 const app           = express();
 const bodyParser    = require('body-parser');
+const session       = require('express-session');
+const mongoConnect  = require('connect-mongo')(session);
+
 const port          = process.env.PORT || 4000;
 
 // arquivos de configuração
 const appInfo   = require( './helpers/config.app' );
 
+//banco de dados
+const db = require('./config/config.db');
+
+
+/* controla as sessões do site
+    serve para controlar acesso
+    pode ser usado para coletar inf sobre o usuário quando tempo no site etc
+     quando a session é criada você tem acesso a ele em qualquer routa 
+*/
+app.use(session({
+    secret: "AppNodeBasic",
+    resave: true,
+    saveUninitialized: false,
+    store: new mongoConnect({
+        mongooseConnection: db
+    })
+}));
+
 // routes
 const indexRouter   = require( './routes/route.index' );
 const userRouter    = require( './routes/route.user' );
 
-//banco de dados
-const db = require('./config/config.db');
 
 // bodyParser responsavel por transmitir dados de formularios
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,7 +41,9 @@ app.use(express.static('./public'));
 
 // variaveis globais
 app.use((req, res, next)=>{    
-    res.locals._APP_INFO = appInfo;
+    res.locals._APP_INFO    = appInfo;
+    if(req.session)
+        res.locals.currentUser  = req.session._id || null
     next();
 })
 
@@ -33,6 +54,12 @@ app.set('views', './views');app.set('view engine', 'pug');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 
+// se nada der certo 404 
+app.use((req, res)=>{
+    res.render('404', {
+        title: '404'
+    });
+})
 
 app.listen(port, ()=>{
     console.log(`Server rodando na porta ${port}`);

@@ -11,7 +11,8 @@ const userSchema = new Schema({
     email: {
         type:   String,
         trim:   true,
-        required: true
+        required: true,
+        unique: 'email já cadastrado'
     },
     createAt: {
         type: Date,
@@ -51,5 +52,4 @@ const userSchema = new Schema({
     }
 
 });
-
 module.exports = mongoose.model('User', userSchema);

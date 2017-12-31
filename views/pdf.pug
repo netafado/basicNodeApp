@@ -1,0 +1,16 @@
+extends ./_layout/materialize.pug
+
+block content
+    .container
+        .row.section
+            .col.m10.offset-m1.card
+                .row 
+                    buttom#imprimir.btn Imprimir
+
+
+block append footerJS
+    script(src="/lib/pdfmake.min.js")
+    script(src="/lib/vfs_fonts.js")
+    script(src="/js/lib/pdf.js")
+    script(src="/js/app.js")
+

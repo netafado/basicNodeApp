@@ -1,6 +1,7 @@
-nav.deep-purple.darken-4(role="navigation")
+nav.black.darken-4(role="navigation")
     nav-wrapper.container
-        a(href="#", id="logo-container", class="brand-logo")
+        a(href="#", id="logo-container", class="brand-logo", style="padding: 8px 15px")
+            img(src="/img/logo-branco.png", alt="Logo Nodeapp", class="responsive-img", style="max-width:250px")
         ul.right.hide-on-med-and-down
             // Se o user estiver logado mostrar esses links
             if currentUser
@@ -22,4 +23,4 @@ nav.deep-purple.darken-4(role="navigation")
                         li                
                             a(href=link.link) #{link.name}  
         a(href="#",data-activates="nav-mobile", class="button-collapse")
-            i.material-icons Menu
+            i.material-icons M

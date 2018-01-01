@@ -22,18 +22,20 @@ html(lang="pt")
         include ../partials/msg.pug
         block content
 
-    footer
-        .page-footer.deep-purple.darken-4
-            .container
+    footer.page-footer.black.darken-4
+        .container
+            .row
+                .col.l6.s12
+                     h5.white-text basicNodeApp
+                .col.l3.s12
+                    h5.white-text basicNodeApp
+                .col.l3.s12
+                    h5.white-text basicNodeApp
+        .footer-copyr.grey.darken-4
+            .container 
                 .row
-                    .col.l6.s12
-                        h5.white-text basicNodeApp
-                    .col.l3.s12
-                       h5.white-text basicNodeApp
-                    .col.l3.s12
-                        h5.white-text basicNodeApp
-            .footer-copyright
-                .container Isaias Francisco dos Santos
+                    .col.s12 
+                        p author: Isaias Francisco dos Santos
         block footerJS
             script(src=`https://code.jquery.com/jquery-2.1.1.min.js?v=${_APP_INFO.version}`)
             script(src=`/js/materialize.js?v=${_APP_INFO.version}`)

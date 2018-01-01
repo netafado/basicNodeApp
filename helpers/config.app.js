@@ -1,3 +1,6 @@
+/**
+ * Configuração básica do app
+ */
 module.exports = App = {
     version : "1.0",
     appName  :"nodeBasicApp",

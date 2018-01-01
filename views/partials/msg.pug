@@ -1,6 +1,18 @@
 if errors
-    .container
+    .container.section
         .row
             each erro in errors
+                .red
+                    p #{erro}
+
+if locals.flashes
+    .container
+        .row
+            .card.flash-card
+            - const categories = Object.keys(locals.flashes)
+                each category in categories
+                    each msg in flashes[category]
+                        .flash(class=`flash-${category}`)
+                            p.flash__text #{msg}
                 .red
                     p #{erro}

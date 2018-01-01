@@ -6,9 +6,55 @@
  * Made By MaterializeCSS.com
  */
 
+ body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
 .icon-block {
   padding: 0 15px;
 }
 .icon-block .material-icons {
 	font-size: inherit;
+}
+.img-center{
+  margin: 0 auto
+}
+
+.pd-top-80{
+  margin-top: 80px
+}
+
+.logos-home{
+  margin-bottom: 30px
+}
+
+.flash-error{
+  background-color: red;
+  color: white
+}
+
+.flash-info{
+  background-color: blue;
+  color: white
+}
+.flash-success{
+  background-color:green;
+  color: white
+}
+
+.flash-warning{
+  background-color:yellow;
+  color: white
+}
+
+@media screen and ( max-width: 728px ){
+  .pd-top-80{
+    margin-top: 30px
+  }
 }

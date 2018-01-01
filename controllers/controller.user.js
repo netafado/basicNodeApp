@@ -87,6 +87,7 @@ exports.registrarPost = (req, res)=>{
                 user.save()
                     .then(user => {
                         sendEmail(user.email, user._id, null);
+                        req.flash('success', 'Antes de ligar confirme email, pelo email que acabamos de enviar');
                          res.redirect('/user/logar');
                     })
                     .catch(err =>{
@@ -128,7 +129,7 @@ exports.logar = (req, res) => {
                     // ver a credencial
                     if(user){
                         // verefica se o user confimou o email
-                        if(user.ConfirmaEmal === false)
+                        if(user.emailConfirmado === false)
                         {
                             return res.render('login',{ errors: ['Email precisa ser confirmado']})
                         }
@@ -162,7 +163,7 @@ exports.logar = (req, res) => {
 
     }else{
         res.render('login', {
-            namefv: 'erro',
+            name: 'erro',
             errors: ['preencha os campos']
         });
     }
@@ -170,6 +171,7 @@ exports.logar = (req, res) => {
 }
 
 exports.logOut = (req, res) =>{
+
     req.session.destroy(function(err) {
         if(err) {
           console.log(err);

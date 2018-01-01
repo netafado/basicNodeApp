@@ -1,3 +1,3 @@
 function openPDF(docDefinition){
-    pdfMake.createPdf(docDefinition).open();
+    pdfMake.createPdf(docDefinition).download('optionalName.pdf');
 }

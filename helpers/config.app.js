@@ -1,9 +1,12 @@
 /**
  * Configuração básica do app
  */
+
+
 module.exports = App = {
     version : "1.0",
     appName  :"nodeBasicApp",
+
     logInlinks: [
         {name: 'home', link:'/'},
         {name: 'PDF', link:'/pdf'}, 
@@ -18,12 +21,5 @@ module.exports = App = {
         {name: 'PDF', link:'/pdf'},        
 
     ],
-
-    erroHandler: (error)=>{
-
-    },
-
-    logFile:(msg)=>{
-
-    }
 }
+

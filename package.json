@@ -4,6 +4,7 @@
   "description": "Template para um quick starter de um projeto em node",
   "main": "app.js",
   "scripts": {
+    "dev": "nodemon --inspect app.js",
     "start": "nodemon app"
   },
   "repository": {

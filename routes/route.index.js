@@ -3,7 +3,6 @@ const router =  express.Router();
 const users = require('../models/model.user');
 
 router.get('/', (req, res)=>{
-
     res.render('index');
 });
 

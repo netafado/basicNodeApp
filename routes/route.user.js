@@ -7,7 +7,6 @@ const router            = express.Router();
 const controllerUser    = require('../controllers/controller.user');
 const author            = require('../helpers/helper.outh');
 
-
 router.get('/registrar', (req, res)=>{
     res.render('register', {name: 'home'});
 });
